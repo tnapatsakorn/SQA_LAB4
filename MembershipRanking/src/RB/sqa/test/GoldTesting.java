@@ -1,6 +1,6 @@
 package RB.sqa.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import sqa.main.Ranking;
 
@@ -9,32 +9,32 @@ public class GoldTesting {
     Ranking ranking = new Ranking();
 
     @Test
-    public void testPurchaseBelowGold() {
-        assertEquals("Gold", ranking.CalculateMembershipRank(15000, 4, 600));
+    public void testGold_LowerPurchase() {
+        assertEquals("Silver", ranking.CalculateMembershipRank(49999, 3, 500));
     }
 
     @Test
-    public void testPurchaseAboveGold() {
-        assertEquals("Gold", ranking.CalculateMembershipRank(100000, 4, 600)); 
+    public void testGold_UpperPurchase() {
+        assertEquals("Gold", ranking.CalculateMembershipRank(99999, 5, 1000));
     }
 
     @Test
-    public void testFrequencyBelowGold() {
-        assertEquals("Gold", ranking.CalculateMembershipRank(60000, 2, 600));
+    public void testGold_LowerFrequencyInvalid() {
+        assertEquals("Silver", ranking.CalculateMembershipRank(50000, 2, 500));
     }
 
     @Test
-    public void testFrequencyAboveGold() {
-        assertEquals("Gold", ranking.CalculateMembershipRank(60000, 6, 600)); 
+    public void testGold_UpperFrequencyInvalid() {
+        assertEquals("Platinum", ranking.CalculateMembershipRank(50000, 6, 500));
     }
 
     @Test
-    public void testPointBelowGold() {
-        assertEquals("Gold", ranking.CalculateMembershipRank(60000, 4, 499)); 
+    public void testGold_LowerPointInvalid() {
+        assertEquals("Silver", ranking.CalculateMembershipRank(50000, 3, 499));
     }
 
     @Test
-    public void testPointAboveGold() {
-        assertEquals("Gold", ranking.CalculateMembershipRank(60000, 4, 1000));
+    public void testGold_UpperPointInvalid() {
+        assertEquals("Platinum", ranking.CalculateMembershipRank(50000, 5, 1001));
     }
 }

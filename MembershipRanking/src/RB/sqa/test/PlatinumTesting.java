@@ -1,6 +1,6 @@
 package RB.sqa.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import sqa.main.Ranking;
 
@@ -9,32 +9,38 @@ public class PlatinumTesting {
     Ranking ranking = new Ranking();
 
     @Test
-    public void testPurchaseBelowPlatinum() {
-        assertEquals("Platinum", ranking.CalculateMembershipRank(99999, 6, 1200)); // ต่ำกว่า 100,000
+    public void testPlatinum_ExactMinimum() {
+        assertEquals("Platinum", ranking.CalculateMembershipRank(100000, 6, 1000));
     }
 
     @Test
-    public void testPurchaseAbovePlatinum() {
-        assertEquals("Platinum", ranking.CalculateMembershipRank(100000, 6, 1200));
+    public void testPlatinum_AboveMinimum() {
+        assertEquals("Platinum", ranking.CalculateMembershipRank(150000, 7, 1200));
     }
 
     @Test
-    public void testFreqBelowPlatinum() {
-        assertEquals("Platinum", ranking.CalculateMembershipRank(150000, 6, 1500));
+    public void testPlatinum_LowerFrequencyInvalid() {
+        assertEquals("Gold", ranking.CalculateMembershipRank(100000, 5, 1000));
     }
 
     @Test
-    public void testFreqAboveBelowPlatinum() {
-        assertEquals("Platinum", ranking.CalculateMembershipRank(150000, 5, 1800)); // ต่ำกว่า 6
+    public void testPlatinum_UpperFrequencyInvalid() {
+        assertEquals("Platinum", ranking.CalculateMembershipRank(100000, 8, 1200));
     }
 
     @Test
-    public void testPointBelowPlatinum() {
-        assertEquals("Platinum", ranking.CalculateMembershipRank(150000, 6, 1700));
+    public void testPlatinum_LowerPointInvalid() {
+        assertEquals("Gold", ranking.CalculateMembershipRank(100000, 6, 999));
     }
 
     @Test
-    public void testPointAbovePlatinum() {
-        assertEquals("Platinum", ranking.CalculateMembershipRank(150000, 8, 1200)); // มากกว่า 7
+    public void testPlatinum_AbovePoint() {
+        assertEquals("Platinum", ranking.CalculateMembershipRank(100000, 7, 2000));
+    }
+
+ 
+    @Test
+    public void testAllInvalidValues_ReturnStandard() {
+        assertEquals("Standard", ranking.CalculateMembershipRank(5000, 0, 50));
     }
 }
